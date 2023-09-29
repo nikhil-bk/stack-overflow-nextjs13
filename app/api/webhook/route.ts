@@ -6,7 +6,10 @@ import type { WebhookEvent } from '@clerk/nextjs/server';
 import { Webhook } from 'svix';
 import { createUser, deleteUser, updateUser } from '@/lib/actions/user.action';
 import { NextResponse } from 'next/server';
- 
+
+type NextApiRequestWithSvixRequiredHeaders = NextApiRequest & {
+    headers: IncomingHttpHeaders & WebhookRequiredHeaders;
+  };
 const webhookSecret: string = process.env.WEBHOOK_SECRET;
  
 export default async function handler(
@@ -70,6 +73,3 @@ export default async function handler(
 
 }
  
-type NextApiRequestWithSvixRequiredHeaders = NextApiRequest & {
-  headers: IncomingHttpHeaders & WebhookRequiredHeaders;
-};
