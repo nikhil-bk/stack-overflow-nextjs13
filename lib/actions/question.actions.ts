@@ -20,20 +20,39 @@ import { FilterQuery } from "mongoose";
 export async function getQuestions(params: GetQuestionsParams) {
   try {
     connectToDatabase();
-    const {searchQuery}=params
-    const query:FilterQuery<typeof Question>={};
-    if(searchQuery){
-      query.$or=[
-        {title:{$regex:new RegExp(searchQuery,"i")}},
-        {content:{$regex:new RegExp(searchQuery,"i")}}
-      ]
+    const { searchQuery, filter ,page=1,pageSize=2} = params;
+    const skipAmount=(page-1)*pageSize
+    const query: FilterQuery<typeof Question> = {};
+    if (searchQuery) {
+      query.$or = [
+        { title: { $regex: new RegExp(searchQuery, "i") } },
+        { content: { $regex: new RegExp(searchQuery, "i") } },
+      ];
+    }
+    let sortOptions = {};
+    switch (filter) {
+      case "newest":
+        sortOptions = { createdAt: -1 };
+        break;
+      case "frequent":
+        sortOptions = { views: -1 };
+        break;
+      case "unanswered":
+        query.answers  = { $size: 0 };
+        break;
     }
     const questions = await Question.find(query)
       .populate({ path: "tags", model: Tag })
       .populate({ path: "author", model: User })
-      .sort({ createdAt: -1 });
+      .skip(skipAmount)
+      .limit(pageSize)
+      .sort(sortOptions);
 
-    return { questions };
+      const totalQuestions=await Question.countDocuments(query)
+      const isNext=totalQuestions>skipAmount+questions.length
+    
+
+    return { questions,isNext };
   } catch (error) {
     console.log(error);
     throw error;
@@ -162,19 +181,17 @@ export async function deleteQuestion(params: DeleteQuestionParams) {
   }
 }
 
-
 export async function editQuestion(params: EditQuestionParams) {
   try {
     connectToDatabase();
-    const { questionId, title,content,path } = params;
-    const question=await Question.findById(questionId).populate("tags");
-    if(!question){
-      throw new Error("Question not found")
+    const { questionId, title, content, path } = params;
+    const question = await Question.findById(questionId).populate("tags");
+    if (!question) {
+      throw new Error("Question not found");
     }
-    question.title=title
-    question.content=content
-    await question.save()
-
+    question.title = title;
+    question.content = content;
+    await question.save();
 
     revalidatePath(path);
   } catch (error) {
@@ -182,4 +199,3 @@ export async function editQuestion(params: EditQuestionParams) {
     throw error;
   }
 }
-
