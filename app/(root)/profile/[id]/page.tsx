@@ -11,6 +11,12 @@ import Link from "next/link";
 import React from "react";
 import QuestionTab from "@/components/shared/QuestionTab";
 import AnswersTabs from "@/components/shared/AnswersTab";
+
+import type { Metadata } from "next";
+
+export const metadata:Metadata={
+  title:'Profile | Dev overflow'
+}
 const Page = async ({ params, searchParams }: URLProps) => {
   const userinfo = await getUserInfo({ userId: params.id });
   const { userId: clerkId } = auth();

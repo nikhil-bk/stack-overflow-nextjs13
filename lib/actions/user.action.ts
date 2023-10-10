@@ -80,7 +80,7 @@ export async function deleteUser(params: DeleteUserParams) {
 export async function getAllUsers(params: GetAllUsersParams) {
   try {
     connectToDatabase();
-    const { searchQuery, filter, page = 1, pageSize = 1 } = params;
+    const { searchQuery, filter, page = 1, pageSize = 10 } = params;
     const skipAmount = (page - 1) * pageSize;
 
     const query: FilterQuery<typeof User> = {};
