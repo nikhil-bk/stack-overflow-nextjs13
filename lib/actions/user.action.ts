@@ -16,7 +16,6 @@ import { revalidatePath } from "next/cache";
 import Question from "@/database/question.model";
 import Tag from "@/database/tag.model";
 import Answer from "@/database/answer.model";
-import { userAgent } from "next/server";
 import { BadgeCriteriaType } from "@/types";
 import { assignBadges } from "../utils";
 
