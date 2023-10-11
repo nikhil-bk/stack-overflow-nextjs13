@@ -14,9 +14,9 @@ import AnswersTabs from "@/components/shared/AnswersTab";
 
 import type { Metadata } from "next";
 
-export const metadata:Metadata={
-  title:'Profile | Dev overflow'
-}
+export const metadata: Metadata = {
+  title: "Profile | Dev overflow",
+};
 const Page = async ({ params, searchParams }: URLProps) => {
   const userinfo = await getUserInfo({ userId: params.id });
   const { userId: clerkId } = auth();
@@ -77,7 +77,7 @@ const Page = async ({ params, searchParams }: URLProps) => {
         </div>
       </div>
       <Stats
-      reputation={userinfo.reputation}
+        reputation={userinfo.reputation}
         totalQuestions={userinfo.totalQuestions}
         totalAnswers={userinfo.totalAnswers}
         badges={userinfo.badgeCounts}
@@ -92,7 +92,10 @@ const Page = async ({ params, searchParams }: URLProps) => {
               AnswersTab
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="top-posts">
+          <TabsContent
+            value="top-posts"
+            className="mt-5 flex w-full flex-col gap-6"
+          >
             {" "}
             <QuestionTab
               searchParams={searchParams}
@@ -101,7 +104,7 @@ const Page = async ({ params, searchParams }: URLProps) => {
             />
           </TabsContent>
           <TabsContent value="answers" className="flex w-full flex-col gap-6">
-          <AnswersTabs
+            <AnswersTabs
               searchParams={searchParams}
               userId={userinfo.user._id}
               clerkId={clerkId}

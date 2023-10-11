@@ -28,7 +28,7 @@ const GlobalSearch = () => {
         if (query) {
           const newUrl = removeKeyFromQuery({
             params: searchParams.toString(),
-            keysToRemove: ["global","type"],
+            keysToRemove: ["global", "type"],
           });
           router.push(newUrl, { scroll: false });
         }
@@ -54,12 +54,12 @@ const GlobalSearch = () => {
           onChange={(e) => {
             setSearch(e.target.value);
             if (!isOpen) setIsOpen(true);
-            if (e.target.value===""&&isOpen) setIsOpen(false);
+            if (e.target.value === "" && isOpen) setIsOpen(false);
           }}
-          className="paragraph-regular no-focus placeholder text-dark400_light700 background-light800_darkgradient border-none shadow-none outline-none"
+          className="paragraph-regular no-focus placeholder text-dark400_light700  border-none bg-transparent shadow-none outline-none "
         />
       </div>
-      {isOpen && <GlobalResult/>}
+      {isOpen && <GlobalResult />}
     </div>
   );
 };
