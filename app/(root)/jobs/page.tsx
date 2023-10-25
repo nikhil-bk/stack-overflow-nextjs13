@@ -1,7 +1,7 @@
 import JobsCard from "@/components/cards/JobsCard";
-import UserCard from "@/components/cards/UserCard";
+
 import Filter from "@/components/shared/Filter";
-import Pagination from "@/components/shared/Pagination";
+
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 
 import { CountriesFilters } from "@/constants/filters";
@@ -12,41 +12,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Jobs | Dev overflow",
 };
-const JobData = [
-  {
-    job_title: "-- New Orleans, LA",
-    job_description:
-      "Build your career at Sazerac! With nearly four centuries of rich history, Sazerac Company has flourished as an independent, American family-owned company with operations in the United States and around",
-    job_city: "Houston",
-    // job_city:null,
-    job_state: "TX",
-    job_country: "US",
-    job_min_salary: null,
-    job_max_salary: null,
-    job_salary_currency: null,
-    employer_logo:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKlgydP7sElaJC9qPrtNHwBhyTMHYgii1RPWsy&s=0",
-    job_employment_type: "CONTRACTOR",
-    job_apply_link:
-      "https://www.linkedin.com/jobs/view/web-developer-6-month-contract-houston-hybrid-at-dice-3624857671",
-  },
-  {
-    job_title: "-- New Orleans, LA",
-    job_description:
-      "Build your career at Sazerac! With nearly four centuries of rich history, Sazerac Company has flourished as an independent, American family-owned company with operations in the United States and around",
-    job_city: "Houston",
-    job_state: "TX",
-    job_country: "US",
-    job_min_salary: null,
-    job_max_salary: null,
-    job_salary_currency: null,
-    employer_logo:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKlgydP7sElaJC9qPrtNHwBhyTMHYgii1RPWsy&s=0",
-    job_employment_type: "CONTRACTOR",
-    job_apply_link:
-      "https://www.linkedin.com/jobs/view/web-developer-6-month-contract-houston-hybrid-at-dice-3624857671",
-  },
-];
+
 const Page = async ({ searchParams }: SearchParamsProps) => {
   const result = await getJobsInfo({
     searchQuery: searchParams.q,
