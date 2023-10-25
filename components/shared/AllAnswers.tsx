@@ -32,7 +32,7 @@ const AllAnswers = async ({
     <div className="mt-11">
       <div className="flex items-center justify-between">
         <h3 className="primary-text-gradient">{totalAnswers} Answers</h3>
-        <Filter filters={AnswerFilters} />
+        <Filter filters={AnswerFilters}   placeholder="Select a Filter"/>
       </div>
       <div>
         {answer.answers.map((answer) => (

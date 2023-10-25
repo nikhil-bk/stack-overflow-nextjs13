@@ -9,7 +9,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { formUrlQuery } from "@/lib/utils";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
+import location from "../../public/assets/icons/location.svg";
+import { ScrollArea } from "../ui/scroll-area";
 
 interface Props {
   filters: {
@@ -18,9 +21,15 @@ interface Props {
   }[];
   otherClasses?: string;
   containerClasses?: string;
+  placeholder: string;
 }
 
-const Filter = ({ filters, otherClasses, containerClasses }: Props) => {
+const Filter = ({
+  filters,
+  otherClasses,
+  containerClasses,
+  placeholder,
+}: Props) => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const paramFilter = searchParams.get("filter");
@@ -41,21 +50,47 @@ const Filter = ({ filters, otherClasses, containerClasses }: Props) => {
         <SelectTrigger
           className={`${otherClasses} body-regular light-border background-light800_dark300 text-dark500_light700 border px-5 py-2.5`}
         >
-          <div className="line-clamp-1 flex-1 text-left">
-            <SelectValue placeholder="Select a Filter" />
+          <div className="line-clamp-1 flex gap-4">
+            {placeholder.includes("Location") && (
+              <Image
+                src={location}
+                alt="location"
+                width={18}
+                height={18}
+                className="text-dark300_light900 invert-colors"
+              />
+            )}
+            <SelectValue placeholder={placeholder} />
           </div>
         </SelectTrigger>
+
         <SelectContent className="text-dark500_light700 small-regular border-none bg-light-900 dark:bg-dark-300">
           <SelectGroup>
-            {filters.map((item) => (
-              <SelectItem
-                key={item.value}
-                value={item.value}
-                className="cursor-pointer focus:bg-light-800 dark:focus:bg-dark-400 "
-              >
-                {item.name}
-              </SelectItem>
-            ))}
+            {placeholder.includes("Location") === true ? (
+              <ScrollArea className="h-72 w-48 rounded-md border">
+                {filters.map((item) => (
+                  <SelectItem
+                    key={item.value}
+                    value={item.value}
+                    className="cursor-pointer focus:bg-light-800 dark:focus:bg-dark-400 "
+                  >
+                    {item.name}
+                  </SelectItem>
+                ))}
+              </ScrollArea>
+            ) : (
+              <>
+                {filters.map((item) => (
+                  <SelectItem
+                    key={item.value}
+                    value={item.value}
+                    className="cursor-pointer focus:bg-light-800 dark:focus:bg-dark-400 "
+                  >
+                    {item.name}
+                  </SelectItem>
+                ))}
+              </>
+            )}
           </SelectGroup>
         </SelectContent>
       </Select>

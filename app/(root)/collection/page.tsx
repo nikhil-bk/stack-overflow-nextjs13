@@ -38,6 +38,7 @@ export default async function Home({ searchParams }: SearchParamsProps) {
         <Filter
           filters={QuestionFilters}
           otherClasses="min-h-[56px] sm:min-w-[170px]"
+          placeholder="Select a Filter"
         />
       </div>
 
